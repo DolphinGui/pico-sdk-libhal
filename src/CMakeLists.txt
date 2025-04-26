@@ -103,6 +103,8 @@ function(pico_add_impl_library target)
         target_compile_definitions(${target} INTERFACE LIB_${TARGET_UPPER}=1)
     endif()
     target_link_libraries(${target} INTERFACE ${target}_headers)
+    get_property(PICO_SDK_INTERFACES GLOBAL PROPERTY PICO_SDK_INTERFACES_PROP)
+    set_property(GLOBAL PROPERTY PICO_SDK_INTERFACES_PROP "${target};${PICO_SDK_INTERFACES}")
 endfunction()
 
 # create an INTERFACE library named target along with associated header, and define LIB_TARGET=1 (upper case) as a compile option
