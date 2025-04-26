@@ -7,6 +7,7 @@ if (NOT TARGET pico_clib_interface)
     target_sources(pico_newlib_interface INTERFACE
             ${CMAKE_CURRENT_LIST_DIR}/newlib_interface.c
     )
+    pico_mirrored_target_link_libraries(pico_newlib_interface INTERFACE pico_time)
 
     # ---- picolibc ----
 

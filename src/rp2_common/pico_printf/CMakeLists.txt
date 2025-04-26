@@ -26,7 +26,7 @@ if (NOT TARGET pico_printf)
     target_sources(pico_printf_none INTERFACE
             ${CMAKE_CURRENT_LIST_DIR}/printf_none.S
     )
-    target_link_libraries(pico_printf_none INTERFACE pico_printf_headers)
+    target_link_libraries(pico_printf_none INTERFACE pico_printf_headers pico_bootrom)
 
     function(wrap_printf_functions TARGET)
         # note that printf and vprintf are in pico_stdio so we can provide thread safety
