@@ -12,4 +12,4 @@ target_include_directories(pico_stdio_rtt_headers INTERFACE
     ${CMAKE_CURRENT_LIST_DIR}/SEGGER/RTT 
     ${CMAKE_CURRENT_LIST_DIR}/SEGGER/Config)
 
-pico_mirrored_target_link_libraries(pico_stdio_rtt INTERFACE pico_stdio)
+pico_mirrored_target_link_libraries(pico_stdio_rtt INTERFACE pico_stdio pico_binary_info)

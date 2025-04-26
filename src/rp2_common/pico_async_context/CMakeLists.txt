@@ -3,7 +3,7 @@ target_include_directories(pico_async_context_base_headers SYSTEM INTERFACE ${CM
 target_sources(pico_async_context_base INTERFACE
         ${CMAKE_CURRENT_LIST_DIR}/async_context_base.c
         )
-pico_mirrored_target_link_libraries(pico_async_context_base INTERFACE pico_platform)
+pico_mirrored_target_link_libraries(pico_async_context_base INTERFACE pico_platform pico_time)
 
 pico_add_library(pico_async_context_poll)
 target_sources(pico_async_context_poll INTERFACE
