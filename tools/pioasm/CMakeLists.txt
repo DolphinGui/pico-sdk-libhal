@@ -82,8 +82,7 @@ install(EXPORT pioasm-targets
         ${INSTALL_CONFIGDIR}
 )
 
-include(../../pico_sdk_version.cmake)
-set(PACKAGE_VERSION "${PICO_SDK_VERSION_MAJOR}.${PICO_SDK_VERSION_MINOR}.${PICO_SDK_VERSION_REVISION}")
+set(PACKAGE_VERSION "2.1.1")
 
 #Create a ConfigVersion.cmake file
 include(CMakePackageConfigHelpers)
