@@ -87,6 +87,8 @@ endfunction()
 macro(pico_simple_hardware_target NAME)
     pico_simple_hardware_headers_target(${NAME})
     pico_simple_hardware_impl_target(${NAME})
+    get_property(PICO_SDK_INTERFACES GLOBAL PROPERTY PICO_SDK_INTERFACES_PROP)
+    set_property(GLOBAL PROPERTY PICO_SDK_INTERFACES_PROP "hardware_${NAME};${PICO_SDK_INTERFACES}")
 endmacro()
 
 # create an INTERFACE library named target, and define LIB_TARGET=1 (upper case) as a compile option
