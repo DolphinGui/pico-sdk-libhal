@@ -41,11 +41,13 @@ target_include_directories(boot_stage2_headers SYSTEM INTERFACE ${CMAKE_CURRENT_
 # \param\ NAME The name of the boot stage 2 target
 # \param\ SOURCES The source files to link into the boot stage 2
 function(pico_define_boot_stage2 NAME SOURCES)
+    message(STATUS "Name ${NAME}: ${SOURCES}")
     add_executable(${NAME}
             ${SOURCES}
     )
     # This is horrible, but necessary bc multiple specs flags mess stuff up
-    list(FILTER CMAKE_CXX_FLAGS EXCLUDE REGEX "--specs=.+")
+    string(REPLACE "--specs=nano.specs" " " CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+    string(REPLACE "--specs=nosys.specs" " " CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
     # todo bit of an abstraction failure - revisit for Clang support anyway
     if (PICO_C_COMPILER_IS_CLANG)
         target_link_options(${NAME} PRIVATE "-nostdlib")
