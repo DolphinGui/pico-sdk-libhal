@@ -46,7 +46,10 @@ function(pico_define_boot_stage2 NAME SOURCES)
     )
 
     # I hate this
-    list(FILTER CMAKE_CXX_FLAGS EXCLUDE REGEX "--specs=.+")
+    message(WARNING "FLAGS: ${CMAKE_CXX_FLAGS}")
+    string(REPLACE "--specs=nano.specs" " " CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+    string(REPLACE "--specs=nosys.specs" " " CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+    message(WARNING "FLAGS AFTER: ${CMAKE_CXX_FLAGS}")
     # todo bit of an abstraction failure - revisit for Clang support anyway
     if (PICO_C_COMPILER_IS_CLANG)
         target_link_options(${NAME} PRIVATE "-nostdlib")
