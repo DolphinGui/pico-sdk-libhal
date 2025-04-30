@@ -1,1 +1,2 @@
 pico_simple_hardware_target(powman)
+pico_mirrored_target_link_libraries(hardware_powman INTERFACE hardware_gpio)
