@@ -41,7 +41,6 @@ target_include_directories(boot_stage2_headers SYSTEM INTERFACE ${CMAKE_CURRENT_
 # \param\ NAME The name of the boot stage 2 target
 # \param\ SOURCES The source files to link into the boot stage 2
 function(pico_define_boot_stage2 NAME SOURCES)
-    message(STATUS "Name ${NAME}: ${SOURCES}")
     add_executable(${NAME}
             ${SOURCES}
     )
@@ -102,12 +101,6 @@ macro(pico_set_boot_stage2 TARGET NAME)
 endmacro()
 
 pico_define_boot_stage2(bs2_default ${PICO_DEFAULT_BOOT_STAGE2_FILE})
-set(bs2_sources "at25sf128a;generic_03h;is25lp080;usb_blinky;w25q080;w25x10cl")
-foreach(bs2_type bs2_sources)
-    pico_define_boot_stage2(bs2_rp2040_${bs2_type} "boot2_${bs2_type}.S")
-    get_property(PICO_SDK_INTERFACES GLOBAL PROPERTY PICO_SDK_INTERFACES_PROP)
-    set_property(GLOBAL PROPERTY PICO_SDK_INTERFACES_PROP "bs2_rp2350_${bs2_type}_library;${PICO_SDK_INTERFACES}")
-endforeach()
 
 # pico_clone_default_boot_stage2(NAME)
 # \brief_nodesc\ Clone the default boot stage 2 target.

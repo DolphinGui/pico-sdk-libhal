@@ -46,10 +46,8 @@ function(pico_define_boot_stage2 NAME SOURCES)
     )
 
     # I hate this
-    message(WARNING "FLAGS: ${CMAKE_CXX_FLAGS}")
     string(REPLACE "--specs=nano.specs" " " CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
     string(REPLACE "--specs=nosys.specs" " " CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-    message(WARNING "FLAGS AFTER: ${CMAKE_CXX_FLAGS}")
     # todo bit of an abstraction failure - revisit for Clang support anyway
     if (PICO_C_COMPILER_IS_CLANG)
         target_link_options(${NAME} PRIVATE "-nostdlib")
@@ -104,12 +102,6 @@ macro(pico_set_boot_stage2 TARGET NAME)
 endmacro()
 
 pico_define_boot_stage2(bs2_default ${PICO_DEFAULT_BOOT_STAGE2_FILE})
-set(bs2_sources "at25sf128a;generic_03h;is25lp080;usb_blinky;w25q080;w25x10cl")
-foreach(bs2_type bs2_sources)
-    pico_define_boot_stage2(bs2_rp2040_${bs2_type} "boot2_${bs2_type}.S")
-    get_property(PICO_SDK_INTERFACES GLOBAL PROPERTY PICO_SDK_INTERFACES_PROP)
-    set_property(GLOBAL PROPERTY PICO_SDK_INTERFACES_PROP "bs2_rp2040_${bs2_type}_library;${PICO_SDK_INTERFACES}")
-endforeach()
 
 # pico_clone_default_boot_stage2(NAME)
 # \brief_nodesc\ Clone the default boot stage 2 target.
