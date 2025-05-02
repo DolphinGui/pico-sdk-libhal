@@ -78,6 +78,8 @@ if (NOT TARGET _pico_sdk_inclusion_marker)
     endif()
 
     get_property(PICO_SDK_INTERFACES GLOBAL PROPERTY PICO_SDK_INTERFACES_PROP)
+    # No I don't know why these two libraries are different
+    list(APPEND PICO_SDK_INTERFACES "hardware_regs" "hardware_structs" "hardware_base")
     foreach(PICO_TARGET ${PICO_SDK_INTERFACES})
         message(STATUS "Checking ${PICO_TARGET}")
         if(PICO_TARGET IN_LIST exclude_list 
@@ -101,6 +103,7 @@ if (NOT TARGET _pico_sdk_inclusion_marker)
         if(include_dir)
             list(APPEND include_dirs ${include_dir})
         endif()
+        get_target_property(sources ${PICO_TARGET} INTERFACE_SOURCES )
         add_library(${PICO_TARGET}_dep STATIC empty.c)
         target_link_libraries(${PICO_TARGET}_dep PUBLIC ${PICO_TARGET} pico_base)
         install(TARGETS ${PICO_TARGET}_dep)
