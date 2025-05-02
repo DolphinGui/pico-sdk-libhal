@@ -66,9 +66,7 @@ if (NOT TARGET _pico_sdk_inclusion_marker)
         pico_promote_common_scope_vars()
     endif()
 
-    # Exclude pico_base because it's only header files
-    # Exclude stdio bc we have our own console stuff. May wish to add it back in if I figure out config stuff
-    set(exclude_list "pico_base;pico_stdio;pico_async_context_freertos;pico_float_pico")
+    set(exclude_list "pico_async_context_freertos")
     if(NOT BUILD_CLIB_LLVM)
         list(APPEND exclude_list "pico_llvm_libc_interface")
     endif()
@@ -81,25 +79,24 @@ if (NOT TARGET _pico_sdk_inclusion_marker)
 
     get_property(PICO_SDK_INTERFACES GLOBAL PROPERTY PICO_SDK_INTERFACES_PROP)
     foreach(PICO_TARGET ${PICO_SDK_INTERFACES})
-        # We are not doing wireless
-        if(PICO_TARGET IN_LIST exclude_list OR PICO_TARGET MATCHES "lwip|mbed|cyw43|btstack|cybt_shared_bus|tinyusb")
+        message(STATUS "Checking ${PICO_TARGET}")
+        if(PICO_TARGET IN_LIST exclude_list 
+            # We are not doing wireless
+            OR PICO_TARGET MATCHES "lwip|mbed|cyw43|btstack|cybt_shared_bus|tinyusb"
+            # Do not build subdependencies bc it screws up the configruation
+            OR PICO_TARGET MATCHES "pico_divider_|pico_float_|pico_double_|pico_sync_"
+            # Ignore internal bootloader targets
+            OR PICO_TARGET MATCHES "boot_stage2")
+
             continue()
         endif()
-        # Do not build subdependencies bc it screws up the configruation
-        if(PICO_TARGET IN_LIST exclude_list OR PICO_TARGET MATCHES "pico_divider_|pico_float_|pico_double_|pico_sync_")
-            continue()
-        endif()
-        # Ignore internal bootloader targets
-        if(PICO_TARGET IN_LIST exclude_list OR PICO_TARGET MATCHES "boot_stage2")
-            continue()
-        endif()
+        
         if(TARGET ${PICO_TARGET}_headers)
             get_target_property(include_dir ${PICO_TARGET}_headers INTERFACE_INCLUDE_DIRECTORIES)
             get_target_property(include_dir_sys ${PICO_TARGET}_headers INTERFACE_SYSTEM_INCLUDE_DIRECTORIES)
             if(include_dir_sys)
                 list(APPEND include_dir ${include_dir_sys})
             endif()
-            message(STATUS "Retrieving include dirs for ${PICO_TARGET}: ${include_dir}")
         endif()
         if(include_dir)
             list(APPEND include_dirs ${include_dir})
