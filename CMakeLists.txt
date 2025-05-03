@@ -79,7 +79,7 @@ if (NOT TARGET _pico_sdk_inclusion_marker)
 
     get_property(PICO_SDK_INTERFACES GLOBAL PROPERTY PICO_SDK_INTERFACES_PROP)
     # No I don't know why these two libraries are different
-    list(APPEND PICO_SDK_INTERFACES "hardware_regs" "hardware_structs" "hardware_base")
+    list(APPEND PICO_SDK_INTERFACES "hardware_regs" "hardware_structs" "hardware_base" "bs2_default_library")
     foreach(PICO_TARGET ${PICO_SDK_INTERFACES})
         message(STATUS "Checking ${PICO_TARGET}")
         if(PICO_TARGET IN_LIST exclude_list 
