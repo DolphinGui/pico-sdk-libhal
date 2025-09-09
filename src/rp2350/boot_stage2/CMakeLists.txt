@@ -41,6 +41,9 @@ target_include_directories(boot_stage2_headers SYSTEM INTERFACE ${CMAKE_CURRENT_
 # \param\ NAME The name of the boot stage 2 target
 # \param\ SOURCES The source files to link into the boot stage 2
 function(pico_define_boot_stage2 NAME SOURCES)
+    if(DO_NOT_BUILD_BOOT_HAL)
+    return()
+    endif()
     add_executable(${NAME}
             ${SOURCES}
     )
