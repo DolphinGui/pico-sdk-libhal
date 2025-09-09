@@ -65,49 +65,4 @@ if (NOT TARGET _pico_sdk_inclusion_marker)
     if (NOT PICO_SDK_TOP_LEVEL_PROJECT)
         pico_promote_common_scope_vars()
     endif()
-
-    set(exclude_list "pico_async_context_freertos")
-    if(NOT BUILD_CLIB_LLVM)
-        list(APPEND exclude_list "pico_llvm_libc_interface")
-    endif()
-    if(NOT BUILD_CLIB_NEWLIB)
-        list(APPEND exclude_list "pico_newlib_interface")
-    endif()
-    if(NOT BUILD_CLIB_PICOLIBC)
-        list(APPEND exclude_list "pico_picolibc_interface")
-    endif()
-
-    get_property(PICO_SDK_INTERFACES GLOBAL PROPERTY PICO_SDK_INTERFACES_PROP)
-    # No I don't know why these two libraries are different
-    list(APPEND PICO_SDK_INTERFACES "hardware_regs" "hardware_structs" "hardware_base" "bs2_default_library")
-    foreach(PICO_TARGET ${PICO_SDK_INTERFACES})
-        message(STATUS "Checking ${PICO_TARGET}")
-        if(PICO_TARGET IN_LIST exclude_list 
-            # We are not doing wireless
-            OR PICO_TARGET MATCHES "lwip|mbed|cyw43|btstack|cybt_shared_bus|tinyusb"
-            # Do not build subdependencies bc it screws up the configruation
-            OR PICO_TARGET MATCHES "pico_divider_|pico_float_|pico_double_|pico_sync_"
-            # Ignore internal bootloader targets
-            OR PICO_TARGET MATCHES "boot_stage2")
-
-            continue()
-        endif()
-        
-        if(TARGET ${PICO_TARGET}_headers)
-            get_target_property(include_dir ${PICO_TARGET}_headers INTERFACE_INCLUDE_DIRECTORIES)
-            get_target_property(include_dir_sys ${PICO_TARGET}_headers INTERFACE_SYSTEM_INCLUDE_DIRECTORIES)
-            if(include_dir_sys)
-                list(APPEND include_dir ${include_dir_sys})
-            endif()
-        endif()
-        if(include_dir)
-            list(APPEND include_dirs ${include_dir})
-        endif()
-        get_target_property(sources ${PICO_TARGET} INTERFACE_SOURCES )
-        add_library(${PICO_TARGET}_dep STATIC empty.c)
-        target_link_libraries(${PICO_TARGET}_dep PUBLIC ${PICO_TARGET} pico_base)
-        install(TARGETS ${PICO_TARGET}_dep)
-    endforeach()
-    message(STATUS "Writing list of include directories to file")
-    file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/INCLUDELIST.txt "${include_dirs}")
 endif()
