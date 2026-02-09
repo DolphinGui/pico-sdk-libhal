@@ -133,6 +133,7 @@ if (NOT TARGET pico_standard_link)
     set(_LINKER_SCRIPT_EXPRESSION "$<IF:$<BOOL:$<TARGET_PROPERTY:PICO_TARGET_LINKER_SCRIPT>>,$<TARGET_PROPERTY:PICO_TARGET_LINKER_SCRIPT>,memmap_$<IF:$<STREQUAL:$<TARGET_PROPERTY:PICO_TARGET_BINARY_TYPE>,>,${PICO_DEFAULT_BINARY_TYPE},$<TARGET_PROPERTY:PICO_TARGET_BINARY_TYPE>>.ld>")
     target_link_options(pico_standard_link INTERFACE "-T${_LINKER_SCRIPT_EXPRESSION}")
     pico_add_link_depend(pico_standard_link ${PICO_LINKER_SCRIPT_PATH}/${_LINKER_SCRIPT_EXPRESSION})
+    pico_set_linker_script(pico_standard_link ${CMAKE_CURRENT_LIST_DIR}/${_LINKER_SCRIPT_EXPRESSION})
     unset(_LINKER_SCRIPT_EXPRESSION)
 
     # PICO_NO_FLASH will be set based on PICO_TARGET_BUILD_TYPE target property being equal to no_flash if set, otherwise to the value of the PICO_NO_FLASH cmake variable unless PICO_TARGET_TYPE is set to something else
