@@ -187,7 +187,7 @@ __force_inline static void __compiler_memory_barrier(void) {
  */
 #define __check_type_compatible(type_a, type_b) static_assert(__builtin_types_compatible_p(type_a, type_b), __STRING(type_a) " is not compatible with " __STRING(type_b));
 
-#define WRAPPER_FUNC(x) __wrap_ ## x
+#define WRAPPER_FUNC(x)  __wrap_ ## x
 #define REAL_FUNC(x) __real_ ## x
 
 #ifdef __cplusplus
