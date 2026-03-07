@@ -9,6 +9,7 @@ option(PICO_STDIO_RTT "Globally enable stdio RTT" 0)
 
 if (NOT TARGET pico_stdio)
     pico_add_library(pico_stdio)
+    pico_mirrored_target_link_libraries(pico_stdio INTERFACE pico_time)
 
     target_include_directories(pico_stdio_headers SYSTEM INTERFACE ${CMAKE_CURRENT_LIST_DIR}/include)
 

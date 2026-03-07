@@ -86,8 +86,4 @@ if (NOT TARGET _pico_sdk_pre_init_marker)
     endmacro()
 
     include(pico_pre_load_platform)
-
-    # We want to configure correct toolchain prior to project load
-    # todo perhaps this should be included by the platform instead?
-    include(pico_pre_load_toolchain)
 endif()

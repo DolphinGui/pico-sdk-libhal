@@ -41,15 +41,16 @@ target_include_directories(boot_stage2_headers SYSTEM INTERFACE ${CMAKE_CURRENT_
 # \param\ NAME The name of the boot stage 2 target
 # \param\ SOURCES The source files to link into the boot stage 2
 function(pico_define_boot_stage2 NAME SOURCES)
+    if(DO_NOT_BUILD_BOOT_HAL)
+    return()
+    endif()
     add_executable(${NAME}
             ${SOURCES}
     )
-
     # todo bit of an abstraction failure - revisit for Clang support anyway
     if (PICO_C_COMPILER_IS_CLANG)
         target_link_options(${NAME} PRIVATE "-nostdlib")
     elseif (PICO_C_COMPILER_IS_GNU)
-        target_link_options(${NAME} PRIVATE "--specs=nosys.specs")
         target_link_options(${NAME} PRIVATE "-nostartfiles")
     endif ()
 
@@ -59,9 +60,6 @@ function(pico_define_boot_stage2 NAME SOURCES)
     target_link_libraries(${NAME} hardware_regs boot_stage2_headers)
     target_link_options(${NAME} PRIVATE "LINKER:--script=${PICO_BOOT_STAGE2_DIR}/boot_stage2.ld")
     set_target_properties(${NAME} PROPERTIES LINK_DEPENDS ${PICO_BOOT_STAGE2_DIR}/boot_stage2.ld)
-
-    pico_add_dis_output(${NAME})
-    pico_add_map_output(${NAME})
 
     set(ORIGINAL_BIN ${CMAKE_CURRENT_BINARY_DIR}/${NAME}.bin)
     set(PADDED_CHECKSUMMED_ASM ${CMAKE_CURRENT_BINARY_DIR}/${NAME}_padded_checksummed.S)

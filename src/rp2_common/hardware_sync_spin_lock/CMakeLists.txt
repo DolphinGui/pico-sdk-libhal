@@ -1,1 +1,2 @@
 pico_simple_hardware_target(sync_spin_lock)
+pico_mirrored_target_link_libraries(hardware_sync_spin_lock INTERFACE pico_runtime_init)

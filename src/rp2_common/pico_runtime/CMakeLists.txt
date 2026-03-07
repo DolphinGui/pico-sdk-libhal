@@ -44,12 +44,6 @@ foreach(LIB IN LISTS PICO_RUNTIME_LIBRARIES)
     endif()
 endforeach()
 
-# todo is this correct/needed?
-if (PICO_C_COMPILER_IS_GNU)
-    target_link_options(pico_runtime INTERFACE "--specs=nosys.specs")
-elseif (PICO_C_COMPILER_IS_CLANG)
-   # target_link_options(pico_runtime INTERFACE "-nostdlib")
-endif()
 
 # pico_minimize_runtime(TARGET [INCLUDE ...] [EXCLUDE ...])
 # \brief\ Minimize the runtime components for the target

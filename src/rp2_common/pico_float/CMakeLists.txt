@@ -7,6 +7,7 @@
 
     target_include_directories(pico_float_headers SYSTEM INTERFACE ${CMAKE_CURRENT_LIST_DIR}/include)
 
+    target_link_libraries(pico_float INTERFACE pico_bootrom)
 
     # add alias "default" which is just pico.
     add_library(pico_float_default INTERFACE)

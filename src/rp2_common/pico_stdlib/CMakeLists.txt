@@ -14,6 +14,7 @@ if (NOT TARGET pico_stdlib)
             pico_runtime
             pico_stdio
     )
+
     foreach(LIB IN LISTS PICO_STDLIB_LIBRARIES)
         if (TARGET ${LIB})
             pico_mirrored_target_link_libraries(pico_stdlib INTERFACE ${LIB})

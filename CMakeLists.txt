@@ -32,9 +32,6 @@ if (NOT TARGET _pico_sdk_inclusion_marker)
 
     pico_is_top_level_project(PICO_SDK_TOP_LEVEL_PROJECT)
 
-    set(CMAKE_C_STANDARD 11)
-    set(CMAKE_CXX_STANDARD 11)
-
     if (NOT PICO_SDK_TOP_LEVEL_PROJECT)
         set(PICO_SDK 1 PARENT_SCOPE)
     endif()

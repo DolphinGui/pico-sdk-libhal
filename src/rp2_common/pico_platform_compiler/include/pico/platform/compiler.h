@@ -21,6 +21,11 @@
 
 #if defined __GNUC__
 #include <sys/cdefs.h>
+// picolibc does not define __printflike, polyfill it in
+#ifndef __printflike
+#define	__printflike(fmtarg, firstvararg) \
+	    __attribute__((__format__ (__printf__, fmtarg, firstvararg)))
+#endif
 // note LLVM defines __GNUC__
 #ifdef __clang__
 #define PICO_C_COMPILER_IS_CLANG 1

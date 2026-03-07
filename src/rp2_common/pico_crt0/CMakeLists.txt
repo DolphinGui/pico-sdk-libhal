@@ -8,7 +8,7 @@ if (NOT TARGET pico_crt0)
     endif()
 
     pico_mirrored_target_link_libraries(pico_crt0 INTERFACE hardware_structs hardware_regs)
-    target_link_libraries(pico_crt0 INTERFACE boot_picobin_headers pico_bootrom_headers)
+    target_link_libraries(pico_crt0 INTERFACE boot_picobin_headers pico_bootrom_headers pico_binary_info_headers)
 endif()
 
 pico_register_common_scope_var(PICO_LINKER_SCRIPT_PATH)
