@@ -30,9 +30,9 @@ if (NOT TARGET pico_printf)
 
     function(wrap_printf_functions TARGET)
         # note that printf and vprintf are in pico_stdio so we can provide thread safety
-        pico_wrap_function(${TARGET} sprintf)
-        pico_wrap_function(${TARGET} snprintf)
-        pico_wrap_function(${TARGET} vsnprintf)
+        #pico_wrap_function(${TARGET} sprintf)
+        #pico_wrap_function(${TARGET} snprintf)
+        #pico_wrap_function(${TARGET} vsnprintf)
     endfunction()
 
     wrap_printf_functions(pico_printf_pico)
@@ -40,7 +40,7 @@ if (NOT TARGET pico_printf)
 
     # always hook printf for printf_none with out weak impl, as it is handled by pico_stdio
     # but that library may not be included
-    pico_wrap_function(pico_printf_none printf)
+    #pico_wrap_function(pico_printf_none printf)
 
     macro(pico_set_printf_implementation TARGET IMPL)
         get_target_property(target_type ${TARGET} TYPE)
